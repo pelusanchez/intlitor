@@ -1,0 +1,63 @@
+@import '../styles/colors.scss';
+
+.main-editor {
+  width: 100%;
+  .editor-table {
+    width: 100%;
+    border: 0;
+    margin: 0 auto;
+    border-spacing: 0;
+    font-size: 1rem;
+    .table-headers {
+      display: flex;
+      padding: 1rem;
+      background-color: $primary-background-light;
+    }
+    .header {
+      padding: 0 1rem;
+      text-align: left;
+    }
+    .header-key, .table-key {
+      width: 20%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 300px;
+    }
+
+    .header-value, .table-value {
+      width: 30%;
+    }
+
+    .table-value {
+      padding: 0 1rem;
+    }
+
+    .table-key {
+      font-size: 0.8rem;
+      color: $primary-background-light;
+      .prefix {
+        font-size: 0.6rem;
+      }
+    }
+    .table-row {
+      width: 100%;
+      display: flex;
+      padding: 0.5rem;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #000;
+      &.odd {
+        background-color: $primary-background-lighter;
+      }
+    }
+
+    tr {
+      max-height: 30px;
+    }
+    td {
+      max-height: 30px;
+      padding: 0rem;
+      text-align: left;
+    }
+  }
+}

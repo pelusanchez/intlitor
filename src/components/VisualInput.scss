@@ -1,0 +1,12 @@
+@import '../styles/colors.scss';
+
+.visual-input {
+  width: 100%;
+  border: 1px solid $primary-background-light-1;
+  padding: 5px;
+  outline: 0;
+  background: rgba(255,255,255,0.5);
+  &.selected, &:hover, &:focus {
+    border: 1px solid $primary-selected;
+  }
+}

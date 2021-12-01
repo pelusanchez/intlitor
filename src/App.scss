@@ -1,0 +1,25 @@
+@import 'styles/colors.scss';
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  font-size: 18px;
+  width: 100vw;
+  height: 100vh;
+  background: $primary-background;
+  font-family: Arial, Helvetica, sans-serif;
+  color: $primary;
+}
+
+.app {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+}
+
+input {
+  width: 300px;
+}

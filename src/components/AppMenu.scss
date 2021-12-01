@@ -1,0 +1,9 @@
+@import '../styles/colors.scss';
+
+.app-menu {
+  display: flex;
+  flex-direction: column;
+  max-width: 200px;
+  height: 100%;
+  background: $primary-background-light;
+}
