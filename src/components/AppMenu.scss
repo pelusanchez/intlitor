@@ -1,9 +1,38 @@
-@import '../styles/colors.scss';
+@import "../styles/colors.scss";
 
 .app-menu {
   display: flex;
   flex-direction: column;
-  max-width: 200px;
-  height: 100%;
-  background: $primary-background-light;
+  width: 200px;
+  background: $background;
+
+  .files-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    user-select: none;
+    .file {
+      display: flex;
+      align-items: center;
+      padding: 0.2rem 0.5rem;
+      cursor: pointer;
+      color: lighten($primary, 50%);
+      background: $background;
+      border-left: 4px solid transparent;
+      .file-type {
+        font-size: 0.8rem;
+        margin-top: -4px;
+        font-weight: bold;
+        margin-right: 0.5rem;
+        color: #ee9f00;
+      }
+      &:hover {
+        color: lighten($primary, 30%);
+      }
+      &.selected {
+        color: $primary;
+      }
+    }
+  }
 }

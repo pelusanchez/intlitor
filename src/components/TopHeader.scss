@@ -1,0 +1,46 @@
+@import '../styles/colors.scss';
+
+.top-header {
+  height: 3rem;
+  display: flex;
+  justify-content: flex-start;
+  background-color: $background;
+  border-bottom: 1px solid #CCC;
+  .title {
+    padding: 0 1rem;
+    width: 150px;
+    h1 {
+      height: 3rem;
+      margin: 0;
+      padding: 0;
+      line-height: 3rem;
+      font-size: 1.5rem;
+    }
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  button.action-icon {
+    width: 100px;
+    color: #FFF;
+    background-color: $primary;
+    border: 0;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    outline: hidden;
+    height: 2rem;
+    line-height: 2rem;
+    margin: 0 0.5rem;
+    position: relative;
+    svg {
+      position: relative;
+      top: 5px;
+      left: -5px;
+
+      color: $primary;
+    }
+  }
+}

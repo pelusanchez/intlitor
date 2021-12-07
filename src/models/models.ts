@@ -13,10 +13,12 @@ export type FileEditor = {
 
 export type TranslationInfo = {
   source: string;
-  target: string;
+  targets: string[];
 };
 
 export type EditorState = {
+  target: string;
+  key?: string;
   translationInfo: TranslationInfo;
   files: FileEditor;
   selected?: string;

@@ -1,6 +1,7 @@
-const TRANSLATE_URL = "https://translate.rext.es/translate";
+import { TRANSLATE_URL } from '../core/constants';
 
 export class TranslateService {
+
   translate(str: string, source: string = "es", target: string = "en") {
     return fetch(TRANSLATE_URL, {
       "headers": {
@@ -15,4 +16,5 @@ export class TranslateService {
       }),
     }).then(res => res.json());
   }
+
 }

@@ -3,10 +3,12 @@ import { EditorState, TranslationInfo } from '../models/models';
 
 const defaultTranslationInfo: TranslationInfo = {
   source: "es",
-  target: "en",
+  targets: [ "en" ],
 };
 
 const defaultState = {
+  target: "en",
+  key: undefined,
   translationInfo: defaultTranslationInfo,
   files: {},
   selected: "",

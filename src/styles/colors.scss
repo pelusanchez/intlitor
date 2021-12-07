@@ -1,6 +1,23 @@
-$primary: #FFF;
-$primary-background: #EFEFEF;
-$primary-background-light: #202020;
-$primary-background-light-1: #A0A0A0;
-$primary-background-lighter: #E0E0E0;
-$primary-selected: #153a91;
+// $white: #FFF;
+// $primary: #FFF;
+// $primary-background-dark: #202020;
+
+// $secondary: #202020;
+// $primary-background-light: #909090;
+
+// $primary-background: #EFEFEF;
+
+
+
+// $primary-background-light-1: #A0A0A0;
+// $primary-background-lighter: #E0E0E0;
+// $primary-selected: #153a91;
+
+$primary: #000000;
+$primary-light: #555;
+$background: #FFFFFF;
+$background-body: #EEE;
+
+$background-light-2: lighten($background, 20%);
+$background-light: lighten($background, 10%);
+$secondary-background: $primary;
