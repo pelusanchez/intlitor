@@ -3,7 +3,7 @@
 .top-header {
   height: 3rem;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   background-color: $background;
   border-bottom: 1px solid #CCC;
   .title {
@@ -24,6 +24,7 @@
     align-items: center;
   }
   button.action-icon {
+    cursor: pointer;
     width: 100px;
     color: #FFF;
     background-color: $primary;
