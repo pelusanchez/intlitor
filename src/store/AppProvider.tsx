@@ -4,6 +4,10 @@ import { EditorState, TranslationInfo } from '../models/models';
 const defaultTranslationInfo: TranslationInfo = {
   source: "es",
   targets: [ "en" ],
+  selected: {
+    source: "es",
+    target: "en",
+  }
 };
 
 const defaultState = {

@@ -8,6 +8,8 @@ import { StringUtils } from "../utils/string.utils";
 import './MainEditor.scss';
 import { VisualInput } from "./VisualInput";
 import { AppMenu } from "./AppMenu";
+import { List } from "./List";
+import { useLocales } from "../services/locale.service";
 
 export const MainEditor = () => {
 
@@ -42,6 +44,15 @@ export const MainEditor = () => {
     setLocales({ ...files });
   };
 
+  const { locales } = useLocales();
+
+  const onChangeLocale = (t: "source" | "target") => {
+    return (opt: { value: string; label: string }) => {
+      const nextState = { ...state };
+      nextState.translationInfo.selected[t] = opt.value;
+      dispatch(nextState);
+    }
+  }
 
   return (<main className="main-editor">
     <AppMenu />
@@ -49,8 +60,21 @@ export const MainEditor = () => {
       <div className='editor-table'>
         <div className='table-headers'>
           <div className='header header-key'>Key</div>
-          <div className='header header-value'>Values</div>
-          <div className='header header-value'>Actions</div>
+          <div className='header header-value'>
+            <List 
+              onChange={onChangeLocale("source")}
+              value={
+                locales.find(s => 
+                  s.value == state.translationInfo.selected.source)}
+              options={locales} />
+          </div>
+          <div className='header header-value'>
+            <List 
+              onChange={onChangeLocale("target")}
+              value={
+                locales.find(s => 
+                  s.value == state.translationInfo.selected.target)}
+              options={locales} /></div>
         </div>
         <div className='table-body'>
           {

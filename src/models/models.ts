@@ -11,9 +11,15 @@ export type FileEditor = {
   [filename: string]: I18NContent;
 };
 
+export type SelectedLocales = {
+  source: string;
+  target: string;
+};
+
 export type TranslationInfo = {
   source: string;
   targets: string[];
+  selected: SelectedLocales;
 };
 
 export type EditorState = {
