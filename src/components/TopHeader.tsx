@@ -5,7 +5,7 @@ import { AppContext } from '../store/AppProvider';
 import { LocalStorage } from '../store/LocalStorage';
 import { JsonUtil } from '../utils/json.utils';
 import { ZipUtils } from '../utils/zip.utils';
-import { FileUploadIcon, FileDownloadIcon } from './icons/icons';
+import { FileUploadIcon, FileDownloadIcon, SaveIcon } from './icons/icons';
 import './TopHeader.scss';
 
 export const TopHeader = () => {
@@ -38,7 +38,7 @@ export const TopHeader = () => {
     }
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      const flat = JsonUtil.flatten(JSON.parse(e.target.result));
+      const flat = JsonUtil.flatten(JSON.parse(e.target.result), state.translationInfo.source);
       const nextFiles = { ...files, [file.name]: flat };
       setLocales(nextFiles);
       LocalStorage.save(nextFiles);
@@ -46,8 +46,8 @@ export const TopHeader = () => {
     reader.readAsText(file);
   };
 
-  const save = async (language: string, translated: boolean) => {
-    const result = JsonUtil.deflatten(files, language, translated);
+  const save = async (language: string) => {
+    const result = JsonUtil.deflatten(files, language);
     ZipUtils.zipFiles(result)
   }
 
@@ -61,8 +61,7 @@ export const TopHeader = () => {
       </div>
       <div className='button-container'>
         <button className='action-icon' onClick={() => inputRef.current?.click()}><FileUploadIcon /> Open</button>
-        <button className='action-icon' onClick={() => save('en', true)}><FileDownloadIcon /> Upload</button>
-        <button onClick={() => saveProject()}>Save project</button>
+        <button className='action-icon' onClick={() => save('en')}><FileDownloadIcon /> Save</button>
         <input type='file' ref={inputRef} onChange={(e) => loadJson((e.target.files as any)[0])} style={ { display: "none" } } />
       </div>
     </div>)

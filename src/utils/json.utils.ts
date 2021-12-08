@@ -1,5 +1,6 @@
 export class JsonUtil {
-  static flatten(data: any, prefix: string = '') {
+
+  static flatten(data: any, input: string, prefix: string = '') {
     const result: any = {};
     for (const key in data) {
       const value = data[key];
@@ -17,14 +18,14 @@ export class JsonUtil {
     return result;
   }
 
-  static deflatten(locale: { [key: string]: any }, prefix: string = '', translated: boolean) {
+  static deflatten(locale: { [key: string]: any }, source: string) {
     const files: any = {};
     for (const file in locale) {
       let fileStructure: any = {};
       for (const key in locale[file]) {
         // Deflatten the key
         const parts = key.split('.');
-        const value = (translated) ? locale[file][key].translated : locale[file][key].input;
+        const value = locale[file][key] && locale[file][key][source] || "";
         fileStructure = this.addValue(fileStructure, parts, value);
       }
       files[file] = fileStructure;
@@ -43,7 +44,6 @@ export class JsonUtil {
     }
     // Set value at nested position:
     partial[parts[parts.length - 1]] = value;
-    console.log(partial)
     return fileStructure;
   }
 }

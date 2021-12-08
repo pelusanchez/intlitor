@@ -7,7 +7,7 @@ const defaultTranslationInfo: TranslationInfo = {
 };
 
 const defaultState = {
-  target: "en",
+  target: "en",         // Current locale 
   key: undefined,
   translationInfo: defaultTranslationInfo,
   files: {},

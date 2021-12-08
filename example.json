@@ -1,0 +1,8 @@
+{
+    "hello": "Hola",
+    "components": {
+        "key": "Clave",
+        "values": "Valores",
+        "actions": "acciones"
+    }
+}
