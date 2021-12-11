@@ -1,5 +1,6 @@
 import React from "react";
 import { EditorState, TranslationInfo } from '../models/models';
+import { LocalStorage } from "./LocalStorage";
 
 const defaultTranslationInfo: TranslationInfo = {
   source: "es",
@@ -24,10 +25,13 @@ export const AppContext = React.createContext({
 });
 
 export const reducer = (state: EditorState, newData: EditorState): EditorState => {
-  return {
+
+  const data = {
     ...state,
     ...newData,
-  }
+  };
+  LocalStorage.save(data.files);
+  return data;
 }
 
 export const AppProvider = ({ children }: React.PropsWithChildren<any>) => {

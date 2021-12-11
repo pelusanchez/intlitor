@@ -1,32 +1,33 @@
+export type Language = string;
+
 export type I18NContent = {
   [key: string]: I18NMessage;
 };
 
 export type I18NMessage = {
-  input: string;
-  translated: string;
+  [key: Language]: string;
 };
 
 export type FileEditor = {
-  [filename: string]: I18NContent;
+  [filename: string]: I18NContent | undefined;
 };
 
 export type SelectedLocales = {
-  source: string;
-  target: string;
+  source: Language;
+  target: Language;
 };
 
 export type TranslationInfo = {
-  source: string;
-  targets: string[];
+  source: Language;
+  targets: Language[];
   selected: SelectedLocales;
 };
 
 export type EditorState = {
-  target: string;
+  target: Language;
   key?: string;
   translationInfo: TranslationInfo;
   files: FileEditor;
-  selected?: string;
+  selected?: Language;
 };
 

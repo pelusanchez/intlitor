@@ -17,31 +17,9 @@
       font-size: 1.5rem;
     }
   }
-
   .button-container {
     display: flex;
     flex-direction: row;
     align-items: center;
-  }
-  button.action-icon {
-    cursor: pointer;
-    width: 100px;
-    color: #FFF;
-    background-color: $primary;
-    border: 0;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    outline: hidden;
-    height: 2rem;
-    line-height: 2rem;
-    margin: 0 0.5rem;
-    position: relative;
-    svg {
-      position: relative;
-      top: 5px;
-      left: -5px;
-
-      color: $primary;
-    }
   }
 }

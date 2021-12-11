@@ -1,31 +1,32 @@
 export class JsonUtil {
 
-  static flatten(data: any, input: string, prefix: string = '') {
+  static flatten(data: any, locale: string, prefix: string = '') {
     const result: any = {};
     for (const key in data) {
       const value = data[key];
       if (value.constructor.name.toLowerCase() === 'object') {
-        const flat = this.flatten(value, prefix + key + '.');
+        const flat = this.flatten(value, locale, prefix + key + '.');
         for (const k in flat) {
           result[k] = flat[k];
         }
       } else if (value.constructor.name.toLowerCase() === 'string') {
         result[prefix + key] = { 
-          'input': value
+          [locale]: value
         };
       }
     }
+    console.log(result)
     return result;
   }
 
-  static deflatten(locale: { [key: string]: any }, source: string) {
+  static deflatten(keys: { [key: string]: any }, locale: string) {
     const files: any = {};
-    for (const file in locale) {
+    for (const file in keys) {
       let fileStructure: any = {};
-      for (const key in locale[file]) {
+      for (const key in keys[file]) {
         // Deflatten the key
         const parts = key.split('.');
-        const value = locale[file][key] && locale[file][key][source] || "";
+        const value = keys[file][key] && keys[file][key][locale] || "";
         fileStructure = this.addValue(fileStructure, parts, value);
       }
       files[file] = fileStructure;

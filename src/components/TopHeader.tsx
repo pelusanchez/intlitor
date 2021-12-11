@@ -12,8 +12,6 @@ export const TopHeader = () => {
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-  const translateService = new TranslateService();
-
   const { state, dispatch } = React.useContext(AppContext);
 
   React.useEffect(() => {
@@ -28,9 +26,7 @@ export const TopHeader = () => {
     dispatch({ ...state, files: data });
   }
 
-  const selected = state.selected;
   const files = state.files;
-  const target = state.target;
 
   const loadJson = (file: File) => {
     if (files[file.name]) {

@@ -1,6 +1,7 @@
 import React from "react";
 import { FileEditor } from "../models/models";
 import { AppContext } from "../store/AppProvider";
+import { LocalStorage } from "../store/LocalStorage";
 
 import './AppMenu.scss';
 
@@ -13,16 +14,21 @@ export const AppMenu = () => {
     dispatch({ ...state, selected });
   }
   
-  const setLocales = (data: FileEditor) => {
-    dispatch({ ...state, files: data });
+  const deleteFile = (key: string) => {
+    const fileEditor = { ...state, files: { ...state.files, [key]: undefined } };
+    dispatch(fileEditor);
   }
   
   return (<div className="app-menu">
     <div className='files-container'>
       {
-        Object.keys(files).map((key) => (
-        <div className='file' key={key} onClick={() => setSelected(key)}>
-          <span className='file-type'>{'{}'}</span>{key}
+        Object.keys(files).filter(f => files[f] !== undefined).map((key) => (
+        <div className='file' key={key}>
+          <span className='file-left' onClick={() => setSelected(key)}>
+            <span className='file-type'>{'{}'}</span>
+              {key}
+              </span>
+          <span className='file-action' onClick={() => deleteFile(key)}>&#x2715;</span>
         </div>))
       }
     </div>

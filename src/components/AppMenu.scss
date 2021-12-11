@@ -15,17 +15,31 @@
     .file {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: 0.2rem 0.5rem;
       cursor: pointer;
       color: lighten($primary, 50%);
       background: $background;
       border-left: 4px solid transparent;
-      .file-type {
+      .file-left {
+        .file-type {
+          font-size: 0.8rem;
+          font-weight: bold;
+          margin-right: 0.5rem;
+          color: #ee9f00;
+        }
+      }
+      &:hover {
+        .file-action {
+          display: block;
+        }
+
+      }
+      .file-action {
+        color: #FF0000;
         font-size: 0.8rem;
-        margin-top: -4px;
-        font-weight: bold;
-        margin-right: 0.5rem;
-        color: #ee9f00;
+        padding-top: 0px;
+        display: none;
       }
       &:hover {
         color: lighten($primary, 30%);

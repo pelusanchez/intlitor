@@ -10,6 +10,7 @@ import { VisualInput } from "./VisualInput";
 import { AppMenu } from "./AppMenu";
 import { List } from "./List";
 import { useLocales } from "../services/locale.service";
+import { SwapIcon, TranslateIcon } from "./icons/icons";
 
 export const MainEditor = () => {
 
@@ -30,17 +31,17 @@ export const MainEditor = () => {
   }
 
   const selected = state.selected;
+  const selectedLanguages = state.translationInfo.selected;
   const files = state.files;
-  const target = state.target;
 
   const autoTranslate = async (key: string) => {
-    const value = files[selected!][key].input;
+    const value = files[selected!]![key][selectedLanguages.source];
     const translated = await translateService.translate(value);
     updateTranslateKey(key, StringUtils.firstUppercase(translated.translatedText));
   }
 
   const updateTranslateKey = (key: string, value: string) => {
-    files[selected!][key].translated = value;
+    files[selected!]![key][selectedLanguages.target] = value;
     setLocales({ ...files });
   };
 
@@ -65,7 +66,7 @@ export const MainEditor = () => {
               onChange={onChangeLocale("source")}
               value={
                 locales.find(s => 
-                  s.value == state.translationInfo.selected.source)}
+                  s.value == selectedLanguages.source)}
               options={locales} />
           </div>
           <div className='header header-value'>
@@ -73,31 +74,31 @@ export const MainEditor = () => {
               onChange={onChangeLocale("target")}
               value={
                 locales.find(s => 
-                  s.value == state.translationInfo.selected.target)}
+                  s.value == selectedLanguages.target)}
               options={locales} /></div>
         </div>
         <div className='table-body'>
           {
-            selected && Object.entries(files[selected])
+            selected && files[selected] !== undefined && Object.entries(files[selected]!)
               .map((entry, i) => (
                 <div className={`table-row ${i % 2 == 0 ? 'even' : 'odd'}`} key={entry[0]}>
                   <div className='value table-key'><KeyAndPrefix value={entry[0]} /></div>
                   <div className='value table-value'>
                     <VisualInput
-                      value={entry[1].input || ""} />
-                    <VisualInput
-                      onChange={(v) => { updateTranslateKey(entry[0], v) }}
-                      value={entry[1].translated || ""} />
+                      value={entry[1][selectedLanguages.source] || ""} />
 
                   </div>
                   <div className='value table-value'>
+                    <VisualInput
+                      onChange={(v) => { updateTranslateKey(entry[0], v) }}
+                      value={entry[1][selectedLanguages.target] || ""} />
                   </div>
 
                   <div>
                     <button
-                      onClick={() => autoTranslate(entry[0])}>Auto-translate</button>
+                      onClick={() => autoTranslate(entry[0])}><TranslateIcon /></button>
                     <button
-                      onClick={() => updateTranslateKey(entry[0], entry[1].input)}>Same</button>
+                      onClick={() => updateTranslateKey(entry[0], entry[1][selectedLanguages.source])}><SwapIcon /></button>
                   </div>
                 </div>))
           }
