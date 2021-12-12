@@ -14,12 +14,13 @@ html, body {
   font-weight: 300;
   line-height: 20px;
   color: $primary;
+  overflow: hidden;
 }
 
 .app {
   display: flex;
   flex-direction: column;
-  min-width: 100vw;
+  width: 100vw;
   min-height: 100vh;
   overflow-x: hidden;
 }

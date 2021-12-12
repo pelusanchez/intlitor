@@ -20,6 +20,9 @@ export const AppMenu = () => {
   }
   
   return (<div className="app-menu">
+    <div className='project-name'>
+      Project
+    </div>
     <div className='files-container'>
       {
         Object.keys(files).filter(f => files[f] !== undefined).map((key) => (

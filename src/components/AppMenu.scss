@@ -5,6 +5,13 @@
   flex-direction: column;
   width: 200px;
   background: $background;
+  border-right: 1px solid #E5E5E5;
+
+  .project-name {
+    font-size: 1.0rem;
+    font-weight: bold;
+    padding: 1rem 12px;
+  }
 
   .files-container {
     display: flex;
