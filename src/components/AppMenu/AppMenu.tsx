@@ -1,7 +1,7 @@
 import React from "react";
-import { FileEditor } from "../models/models";
-import { AppContext } from "../store/AppProvider";
-import { LocalStorage } from "../store/LocalStorage";
+import { FileEditor } from "../../models/models";
+import { AppContext } from "../../store/AppProvider";
+import { LocalStorage } from "../../store/LocalStorage";
 
 import './AppMenu.scss';
 

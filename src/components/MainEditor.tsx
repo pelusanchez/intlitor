@@ -7,7 +7,7 @@ import { StringUtils } from "../utils/string.utils";
 
 import './MainEditor.scss';
 import { VisualInput } from "./VisualInput";
-import { AppMenu } from "./AppMenu";
+import { AppMenu } from "./AppMenu/AppMenu";
 import { List } from "./List";
 import { useLocales } from "../services/locale.service";
 import { SwapIcon, TranslateIcon } from "./icons/icons";

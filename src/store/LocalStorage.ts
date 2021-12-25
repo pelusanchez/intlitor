@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { FileEditor } from '../models/models';
 
 const LOCAL_STORAGE_KEY = `locales-translation`;
@@ -27,4 +28,18 @@ export class LocalStorage {
     }
     return {};
   }
+}
+
+export const useLocalStorage = (key: string, defaultValue?: string) => {
+
+  const [ value, setValueInternal ] = React.useState(() => {
+    return window.localStorage.getItem(key);
+  });
+
+  const setValue = (value: string) => {
+    window.localStorage.setItem(key, value);
+    setValueInternal(value);
+  };
+  
+  return [ value, setValue ];
 }

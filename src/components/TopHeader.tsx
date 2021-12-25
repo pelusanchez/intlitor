@@ -1,6 +1,5 @@
 import React from 'react';
 import { FileEditor } from '../models/models';
-import { TranslateService } from '../services/translate.service';
 import { AppContext } from '../store/AppProvider';
 import { LocalStorage } from '../store/LocalStorage';
 import { JsonUtil } from '../utils/json.utils';
