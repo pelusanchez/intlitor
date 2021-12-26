@@ -6,11 +6,27 @@
   width: 200px;
   background: $background;
   border-right: 1px solid #E5E5E5;
+  padding: 12px 6px;
 
   .project-name {
     font-size: 1.0rem;
     font-weight: bold;
-    padding: 1rem 12px;
+    margin: 0.5rem 0;
+    input {
+      font-size: 1rem;
+    }
+  }
+
+  input.input-inlined {
+    padding: 2px 0;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid #AAA;
+    width: 100%;
+    &:hover, &:active, &:focus {
+      outline: none;
+      border-bottom: 1px solid #333;
+    }
   }
 
   .files-container {
@@ -19,11 +35,25 @@
     overflow-y: auto;
     font-size: 0.9rem;
     user-select: none;
+    margin: 0.5rem 0;
+    .files-title {
+      display: flex;
+      justify-content: space-between;
+      overflow: hidden;
+      margin: 0.5rem 0;
+    }
+    .files-title-text {
+      font-size: 1.1rem;
+    }
+    .files-new {
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
     .file {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.2rem 0.5rem;
+      padding: 0.2rem 0rem;
       cursor: pointer;
       color: lighten($primary, 50%);
       background: $background;
@@ -34,6 +64,12 @@
           font-weight: bold;
           margin-right: 0.5rem;
           color: #ee9f00;
+        }
+        .filename {
+          font-size: 0.8rem;
+          max-width: 120px;
+          width: unset;
+          border: 0;
         }
       }
       &:hover {

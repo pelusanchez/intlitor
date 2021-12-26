@@ -1,23 +1,8 @@
 import React from "react";
-import { EditorState, TranslationInfo } from '../models/models';
+import { EditorState } from '../models/models';
 import { LocalStorage } from "./LocalStorage";
+import { defaultState } from "./StoreModel";
 
-const defaultTranslationInfo: TranslationInfo = {
-  source: "es",
-  targets: [ "en" ],
-  selected: {
-    source: "es",
-    target: "en",
-  }
-};
-
-const defaultState = {
-  target: "en",         // Current locale 
-  key: undefined,
-  translationInfo: defaultTranslationInfo,
-  files: {},
-  selected: "",
-} as EditorState;
 
 export const AppContext = React.createContext({
   state: defaultState,
