@@ -11,12 +11,14 @@ export type ListProps = {
     value?: Option;
     options: Option[];
     onChange(option: Option): void;
+    isMulti?: boolean;
 };
 
-export const List = ({ value, options, onChange }: ListProps) => {
+export const List = ({ value, options, onChange, ...other }: ListProps) => {
 
     return (
         <Select
+            {...other}
             styles={{
                 control: (base: any) => ({
                 ...base,

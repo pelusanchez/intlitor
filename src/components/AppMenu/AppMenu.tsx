@@ -10,23 +10,18 @@ export const AppMenu = () => {
   const { state, dispatch } = React.useContext(AppContext);
   const files = state.files;
 
-  const setSelected = (selected: string) => {
-    dispatch({ ...state, selected });
-  }
-
-  const deleteFile = (key: string) => {
-    const fileEditor = { ...state, files: { ...state.files, [key]: undefined } };
-    dispatch(fileEditor);
-  }
+  const setSelected = (selected: string) => dispatch({ ...state, selected });
+  const deleteFile = (key: string) => dispatch({ ...state, files: { ...state.files, [key]: undefined } });
 
   const newFile = () => {
     const key = 'unnamed';
-    const fileEditor = { ...state, files: { ...state.files, [key]: {} } };
-    dispatch(fileEditor);
+    dispatch({ ...state, files: { ...state.files, [key]: { values: [] } } });
   }
 
-  /* Use for editing text without updating
-    directly */
+  /* 
+    Use for editing text without updating
+    directly 
+  */
   const [currentKeyEdit, setCurrentKeyEdit] = React.useState({
     currentKey: undefined as string | undefined,
     value: '',
@@ -77,6 +72,7 @@ export const AppMenu = () => {
 
   return (<div className="app-menu">
     <div className='project-name'>
+      
       <input
         type='text'
         className='project-name-input input-inlined'

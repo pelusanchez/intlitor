@@ -1,10 +1,11 @@
 export type Language = string;
 
 export type I18NContent = {
-  [key: string]: I18NMessage;
+  values: I18NMessage[];
 };
 
 export type I18NMessage = {
+  key: string;
   [key: Language]: string;
 };
 

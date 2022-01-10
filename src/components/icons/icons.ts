@@ -6,3 +6,4 @@ export { ReactComponent as PublishIcon } from './svg/publish_black_24dp.svg';
 export { ReactComponent as SaveIcon } from './svg/save_alt_black_24dp.svg';
 export { ReactComponent as TranslateIcon } from './svg/translate_black_24dp.svg';
 export { ReactComponent as SwapIcon } from './svg/swap_horiz_black_24dp.svg';
+export { ReactComponent as AddIcon } from './svg/add_black_24dp.svg';
