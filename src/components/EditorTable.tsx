@@ -108,9 +108,9 @@ export const EditorTable = () => {
   const { locales } = useLocales();
 
   const projectLanguages = React.useMemo(() => {
-    return locales.filter(l => state.files.languages.includes(l.value));
-  }, [ locales ]);
-  
+    return locales.filter(l => state.files.languages?.includes(l.value));
+  }, [ state.files.languages, locales ]);
+
   const onChangeLocale = (t: "source" | "target"): any => {
     return (opt: { value: string; label: string }) => {
       const nextState = { ...state };
