@@ -10,7 +10,11 @@ export type I18NMessage = {
 };
 
 export type FileEditor = {
-  [filename: string]: I18NContent | undefined;
+  project: string;
+  languages: string[];
+  files: {
+    [filename: string]: I18NContent | undefined;
+  };
 };
 
 export type SelectedLocales = {

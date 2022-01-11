@@ -1,13 +1,22 @@
 import JSZip from "jszip";
+import { FileEditor } from "../models/models";
 import { FileUtils } from "./FileUtils";
+import { JsonUtil } from "./json.utils";
 
 export class ZipUtils {
 
-  public static zipProject(project: any) {
+  public static zipProject(fileEditor: FileEditor) {
     const zip = new JSZip();
-    zip.file('project.json', JSON.stringify(project, null, 2));
+    /* For each file, deflatten */
+    const languages = fileEditor.languages;
+    for (const lang in languages) {
+      const files = JsonUtil.deflatten(fileEditor, lang);
+      for (const file in files) {
+        zip.file(file, JSON.stringify(files[file], null, 2));
+      }
+    }
+
     zip.generateAsync({type:"blob"}).then(function(content) {
-        // see FileSaver.js
         FileUtils.saveAs(content, `project.zip`);
     });
   }
@@ -20,7 +29,6 @@ export class ZipUtils {
     });
 
     zip.generateAsync({type:"blob"}).then(function(content) {
-        // see FileSaver.js
         FileUtils.saveAs(content, `${name}.zip`);
     });
   }

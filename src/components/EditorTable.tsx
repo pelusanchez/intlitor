@@ -15,6 +15,7 @@ export const EditorTable = () => {
 
   const { state, dispatch } = React.useContext(AppContext);
   const [ currentKeyUpdate, setCurrentKeyUpdate ] = React.useState({ key: '', value: '' });
+
   React.useEffect(() => {
     const exists = LocalStorage.read();
     if (exists !== null) {
@@ -29,30 +30,30 @@ export const EditorTable = () => {
 
   const selected = state.selected;
   const selectedLanguages = state.translationInfo.selected;
-  const files = state.files;
+  const project = state.files;
 
   const findByKey = (key: string): I18NMessage | undefined => {
     if (!selected) {
       return undefined;
     }
-    return files[selected]?.values.find(m => m.key === key);
+    return project.files[selected]?.values.find(m => m.key === key);
   }
 
   const updateByKey = (key: string, newValue: I18NMessage): I18NMessage | undefined => {
     if (!selected) {
       return undefined;
     }
-    const nextValues = files[selected]!.values.map(m => { 
+    const nextValues = project.files[selected]!.values.map(m => { 
       if (m.key === key) {
         return newValue;
       }
       return m;
     });
-    const nextFiles = { ...files,
+    const nextFiles = { ...project.files,
       [selected!]: {
         values: nextValues,
      } };
-    setLocales({ ...nextFiles });
+    setLocales({ ...project, files: { ...project.files, ...nextFiles } });
   }
 
   const autoTranslate = async (key: string) => {
@@ -78,13 +79,13 @@ export const EditorTable = () => {
   const updateKey = (key: string, nextValue: string) => {
     if (currentKeyUpdate.key !== key && currentKeyUpdate.key !== currentKeyUpdate.value) {
       /* Do update */
-      const nextUpdate = files[selected!]!.values.map(m => {
+      const nextUpdate = project.files[selected!]!.values.map(m => {
         if (m.key === currentKeyUpdate.key) {
           return { ...m, key: currentKeyUpdate.value };
         }
         return m;
       });
-      setLocales({ ...files, [selected!]: { values: nextUpdate } });
+      setLocales({ ...project, files: { ...project.files, [selected!]: { values: nextUpdate } } });
     }
     setCurrentKeyUpdate({key: key, value: nextValue});
   };
@@ -100,19 +101,24 @@ export const EditorTable = () => {
       return;
     }
 
-    const nextSelected = [{ key: DEFAULT_KEY },   ...files[selected]!.values];
-    setLocales({ ...files, [selected]: { values: nextSelected } });
+    const nextSelected = [{ key: DEFAULT_KEY },   ...project.files[selected]!.values];
+    setLocales({ ...project, files: { ...project.files, [selected]: { values: nextSelected }} });
   }
 
   const { locales } = useLocales();
 
-  const onChangeLocale = (t: "source" | "target") => {
+  const projectLanguages = React.useMemo(() => {
+    return locales.filter(l => state.files.languages.includes(l.value));
+  }, [ locales ]);
+  
+  const onChangeLocale = (t: "source" | "target"): any => {
     return (opt: { value: string; label: string }) => {
       const nextState = { ...state };
       nextState.translationInfo.selected[t] = opt.value;
       dispatch(nextState);
     }
   }
+  
   return (<div className='editor-table'>
         <div className='table-headers'>
           <div className='header header-key'>Key</div>
@@ -122,7 +128,7 @@ export const EditorTable = () => {
               value={
                 locales.find(s => 
                   s.value == selectedLanguages.source)}
-              options={locales} />
+              options={projectLanguages} />
           </div>
           <div className='header header-value'>
             <List 
@@ -130,7 +136,8 @@ export const EditorTable = () => {
               value={
                 locales.find(s => 
                   s.value == selectedLanguages.target)}
-              options={locales} /></div>
+              options={projectLanguages} />
+          </div>
 
           <div className='header header-value'>
               <button
@@ -139,7 +146,7 @@ export const EditorTable = () => {
         </div>
         <div className='table-body'>
           {
-            selected && files[selected] !== undefined && files[selected]!.values
+            selected && project.files[selected] !== undefined && project.files[selected]!.values
               .map((entry, i) => (
                 <div className={`table-row ${i % 2 == 0 ? 'even' : 'odd'}`} key={entry.key}>
                   <div className='value table-key'>
@@ -166,7 +173,7 @@ export const EditorTable = () => {
                     </button>
                     <button
                       onClick={() => 
-                      updateTranslateKey(entry[0], selectedLanguages.target, entry[selectedLanguages.source])}>
+                      updateTranslateKey(entry.key, selectedLanguages.target, entry[selectedLanguages.source])}>
                         <SwapIcon />
                     </button>
                   </div>

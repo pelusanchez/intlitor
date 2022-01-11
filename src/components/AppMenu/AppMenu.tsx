@@ -8,14 +8,14 @@ import './AppMenu.scss';
 export const AppMenu = () => {
 
   const { state, dispatch } = React.useContext(AppContext);
-  const files = state.files;
+  const editor: FileEditor = state.files;
 
   const setSelected = (selected: string) => dispatch({ ...state, selected });
   const deleteFile = (key: string) => dispatch({ ...state, files: { ...state.files, [key]: undefined } });
 
   const newFile = () => {
     const key = 'unnamed';
-    dispatch({ ...state, files: { ...state.files, [key]: { values: [] } } });
+    dispatch({ ...state, files: { ...editor, files: { ...editor.files, [key]: { values: [] } } } });
   }
 
   /* 
@@ -43,11 +43,11 @@ export const AppMenu = () => {
     if (currentKeyEdit.value.trim().length === 0) {
       return;
     }
-    const copyValue = state.files[currentKeyEdit.currentKey];
+    const copyValue = editor.files[currentKeyEdit.currentKey];
     const fileEditor = { 
       ...state, 
       files: { 
-        ...state.files, 
+        ...editor, 
         [currentKeyEdit.value]: copyValue,
         [currentKeyEdit.currentKey]: undefined,
       }
@@ -67,15 +67,23 @@ export const AppMenu = () => {
     // Not same key... Begin new edition...
     saveFilename();
     doEdit(key, value);
+  }
 
+  const updateProjectName = (name: string) => {
+    dispatch({ ...state, files: {
+      languages: editor.languages,
+      project: name,
+      files: editor.files,
+    }});
   }
 
   return (<div className="app-menu">
     <div className='project-name'>
-      
       <input
         type='text'
         className='project-name-input input-inlined'
+        value={editor.project}
+        onChange={({ target }) => updateProjectName(target.value)}
         placeholder='Project name...' />
     </div>
     <div className='files-container'>
@@ -84,13 +92,14 @@ export const AppMenu = () => {
         <span className='files-new' onClick={newFile}>+</span>
       </div>
       {
-        Object.keys(files).filter(f => files[f] !== undefined).map((key) => (
+        Object.keys(editor.files || {}).filter(f => editor.files[f] !== undefined).map((key) => (
           <div className='file' key={key}>
             <span className='file-left' onClick={() => setSelected(key)}>
               <span className='file-type'>{'{}'}</span>
               <input 
                 type='text' 
                 className='filename input-inlined'
+                onBlur={saveFilename}
                 onChange={e => onChangeFilename(key, e.target.value)}
                 value={currentKeyEdit.currentKey === key ? currentKeyEdit.value : key} />
             </span>

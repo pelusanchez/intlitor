@@ -21,11 +21,11 @@ export class JsonUtil {
     return { values: result };
   }
 
-  static deflatten(keys: FileEditor, locale: string) {
+  static deflatten(fileEditor: FileEditor, locale: string) {
     const files: any = {};
-    for (const file in keys) {
+    for (const file in fileEditor.files) {
       let fileStructure: any = {};
-      for (const message of keys[file]!.values) {
+      for (const message of fileEditor.files[file]!.values) {
         // Deflatten the key
         const key = message.key;
         const parts = key.split('.');

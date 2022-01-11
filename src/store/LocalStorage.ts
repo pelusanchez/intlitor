@@ -26,7 +26,11 @@ export class LocalStorage {
         // Silently fail
       }
     }
-    return {};
+    return {
+      project: '',
+      languages: ['es', 'en'],
+      files: {},
+    };
   }
 }
 

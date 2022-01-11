@@ -10,4 +10,5 @@ export const MainEditor = () => {
       <EditorTable />
     </div>
   </main>);
+  
 }
