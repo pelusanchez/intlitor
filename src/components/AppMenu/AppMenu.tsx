@@ -24,8 +24,16 @@ export const AppMenu = () => {
     });
   }
 
-  const newFile = () => {
+  const generateFileName = () => {
     const key = 'unnamed';
+    const extension = 'json';
+    const fileNames = editor.files.filter(f => f.filename.startsWith(key));
+    const next = fileNames.length + 1;
+    return `${key}-${next}.${extension}`;
+  };
+
+  const newFile = () => {
+    const key = generateFileName();
     dispatch({ 
       ...state, 
       editor: { 
@@ -38,7 +46,7 @@ export const AppMenu = () => {
         ]
       } 
     });
-  }
+  };
 
   /* 
     Use for editing text without updating
@@ -66,6 +74,11 @@ export const AppMenu = () => {
     if (currentKeyEdit.value.trim().length === 0) {
       return;
     }
+    
+    if (editor.files.find(f => f.filename === currentKeyEdit.value)) {
+      // Filename already exists...
+      return;
+    };
     
     const nextFiles = { 
       ...state, 
