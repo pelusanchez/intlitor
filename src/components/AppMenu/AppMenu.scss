@@ -6,12 +6,11 @@
   width: 200px;
   background: $background;
   border-right: 1px solid #E5E5E5;
-  padding: 12px 6px;
 
   .project-name {
     font-size: 1.0rem;
     font-weight: bold;
-    margin: 0.5rem 0;
+    margin: 0.8rem 0.5rem;
     input {
       font-size: 1rem;
     }
@@ -40,7 +39,7 @@
       display: flex;
       justify-content: space-between;
       overflow: hidden;
-      margin: 0.5rem 0;
+      margin: 0.5rem 0.5rem;
     }
     .files-title-text {
       font-size: 1.1rem;
@@ -53,11 +52,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.2rem 0rem;
+      padding: 0.2rem 0.4rem;
       cursor: pointer;
       color: lighten($primary, 50%);
       background: $background;
       border-left: 4px solid transparent;
+      &.selected {
+        background-color: #EEE;
+      }
       .file-left {
         .file-type {
           font-size: 0.8rem;
@@ -69,6 +71,7 @@
           font-size: 0.8rem;
           max-width: 120px;
           width: unset;
+          background-color: transparent;
           border: 0;
         }
       }

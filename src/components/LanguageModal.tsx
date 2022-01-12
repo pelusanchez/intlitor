@@ -15,7 +15,7 @@ export const LanguageModal = ({ onSave }: LanguageModalProps) => {
 
   const { locales } = useLocales();
   const localesMap = React.useMemo(() => Object.fromEntries(locales.map(l => [l.value, l])), [locales]);
-  const currentLanguages = state.files.languages.filter(l => !!l) || [];
+  const currentLanguages = state.files.languages?.filter(l => !!l) || [];
   
   const updateLanguage = (language: string[]) => {
     const nextState = { ...state, files: {
@@ -26,7 +26,7 @@ export const LanguageModal = ({ onSave }: LanguageModalProps) => {
   }
 
   const onAddLocale = (selected: Option) => {
-    const nextLanguage = [ ...state.files.languages ];
+    const nextLanguage = [ ...currentLanguages ];
     if (!nextLanguage.includes(selected.value)) {
       nextLanguage.push(selected.value);
     }
@@ -35,7 +35,7 @@ export const LanguageModal = ({ onSave }: LanguageModalProps) => {
   };
 
   const onDeleteLanguage = (selected: Option) => {
-    const nextLanguage = state.files.languages.filter(l => l !== selected.value);
+    const nextLanguage = currentLanguages.filter(l => l !== selected.value);
     updateLanguage(nextLanguage);
   };
 

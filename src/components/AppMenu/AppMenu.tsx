@@ -9,6 +9,7 @@ export const AppMenu = () => {
 
   const { state, dispatch } = React.useContext(AppContext);
   const editor: FileEditor = state.files;
+  const selected = state.selected;
 
   const setSelected = (selected: string) => dispatch({ ...state, selected });
   const deleteFile = (key: string) => dispatch({ ...state, files: { ...state.files, [key]: undefined } });
@@ -28,9 +29,10 @@ export const AppMenu = () => {
   });
 
   const doEdit = (key: string, value?: string) => {
+    const currentText = value === undefined ? key : value;
     setCurrentKeyEdit({
       currentKey: key,
-      value: value || key,
+      value: currentText,
     });
   }
 
@@ -48,8 +50,11 @@ export const AppMenu = () => {
       ...state, 
       files: { 
         ...editor, 
-        [currentKeyEdit.value]: copyValue,
-        [currentKeyEdit.currentKey]: undefined,
+        files: {
+          ...editor.files, 
+          [currentKeyEdit.value]: copyValue,
+          [currentKeyEdit.currentKey]: undefined,
+        },
       }
     };
     dispatch(fileEditor);
@@ -93,8 +98,12 @@ export const AppMenu = () => {
       </div>
       {
         Object.keys(editor.files || {}).filter(f => editor.files[f] !== undefined).map((key) => (
-          <div className='file' key={key}>
-            <span className='file-left' onClick={() => setSelected(key)}>
+          <div 
+            className={`file ${selected === key ? 'selected' : ''}`} 
+            key={key}>
+            <span 
+                className='file-left'
+                onClick={() => setSelected(key)}>
               <span className='file-type'>{'{}'}</span>
               <input 
                 type='text' 
