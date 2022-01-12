@@ -15,13 +15,16 @@ export const LanguageModal = ({ onSave }: LanguageModalProps) => {
 
   const { locales } = useLocales();
   const localesMap = React.useMemo(() => Object.fromEntries(locales.map(l => [l.value, l])), [locales]);
-  const currentLanguages = state.files.languages?.filter(l => !!l) || [];
+  const currentLanguages = state.editor.languages?.filter(l => !!l) || [];
   
   const updateLanguage = (language: string[]) => {
-    const nextState = { ...state, files: {
-      ...state.files,
-      languages: language,
-    } };
+    const nextState = { 
+      ...state, 
+      editor: {
+        ...state.editor,
+        languages: language,
+      } 
+    };
     dispatch(nextState);
   }
 

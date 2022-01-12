@@ -8,15 +8,36 @@ import './AppMenu.scss';
 export const AppMenu = () => {
 
   const { state, dispatch } = React.useContext(AppContext);
-  const editor: FileEditor = state.files;
+  const editor: FileEditor = state.editor;
   const selected = state.selected;
 
   const setSelected = (selected: string) => dispatch({ ...state, selected });
-  const deleteFile = (key: string) => dispatch({ ...state, files: { ...state.files, [key]: undefined } });
+  const deleteFile = (key: string) => {
+    dispatch({ 
+      ...state, 
+      editor: { 
+        ...state.editor, 
+        files: [
+          ...state.editor.files.filter(f => f.filename !== key)
+        ]
+      }
+    });
+  }
 
   const newFile = () => {
     const key = 'unnamed';
-    dispatch({ ...state, files: { ...editor, files: { ...editor.files, [key]: { values: [] } } } });
+    dispatch({ 
+      ...state, 
+      editor: { 
+        ...editor, files: [
+          ...editor.files, 
+          {
+            filename: key,
+            values: [],
+          }
+        ]
+      } 
+    });
   }
 
   /* 
@@ -45,19 +66,26 @@ export const AppMenu = () => {
     if (currentKeyEdit.value.trim().length === 0) {
       return;
     }
-    const copyValue = editor.files[currentKeyEdit.currentKey];
-    const fileEditor = { 
+    
+    const nextFiles = { 
       ...state, 
-      files: { 
-        ...editor, 
-        files: {
-          ...editor.files, 
-          [currentKeyEdit.value]: copyValue,
-          [currentKeyEdit.currentKey]: undefined,
-        },
+      editor: { 
+        ...state.editor, 
+        files: [
+          ...state.editor.files.map(f => {
+            if (f.filename === currentKeyEdit.currentKey) {
+              return {
+                ...f,
+                filename: currentKeyEdit.value,
+              }
+            }
+            return f;
+          })
+        ]
       }
     };
-    dispatch(fileEditor);
+    LocalStorage.save(nextFiles.editor);
+    dispatch(nextFiles);
   }
   
   const onChangeFilename = (key: string, value: string) => {
@@ -75,11 +103,14 @@ export const AppMenu = () => {
   }
 
   const updateProjectName = (name: string) => {
-    dispatch({ ...state, files: {
-      languages: editor.languages,
-      project: name,
-      files: editor.files,
-    }});
+    dispatch({ 
+      ...state, 
+      editor: {
+        languages: editor.languages,
+        project: name,
+        files: editor.files,
+      }
+    });
   }
 
   return (<div className="app-menu">
@@ -97,22 +128,22 @@ export const AppMenu = () => {
         <span className='files-new' onClick={newFile}>+</span>
       </div>
       {
-        Object.keys(editor.files || {}).filter(f => editor.files[f] !== undefined).map((key) => (
+        editor.files.filter(f => f !== undefined).map((file) => (
           <div 
-            className={`file ${selected === key ? 'selected' : ''}`} 
-            key={key}>
+            className={`file ${selected === file.filename ? 'selected' : ''}`} 
+            key={file.filename}>
             <span 
                 className='file-left'
-                onClick={() => setSelected(key)}>
+                onClick={() => setSelected(file.filename)}>
               <span className='file-type'>{'{}'}</span>
               <input 
                 type='text' 
                 className='filename input-inlined'
                 onBlur={saveFilename}
-                onChange={e => onChangeFilename(key, e.target.value)}
-                value={currentKeyEdit.currentKey === key ? currentKeyEdit.value : key} />
+                onChange={e => onChangeFilename(file.filename, e.target.value)}
+                value={currentKeyEdit.currentKey === file.filename ? currentKeyEdit.value : file.filename} />
             </span>
-            <span className='file-action' onClick={() => deleteFile(key)}>&#x2715;</span>
+            <span className='file-action' onClick={() => deleteFile(file.filename)}>&#x2715;</span>
           </div>))
       }
     </div>

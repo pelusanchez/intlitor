@@ -2,12 +2,12 @@ import { FileEditor, I18NContent, I18NMessage } from "../models/models";
 
 export class JsonUtil {
 
-  static flatten(data: any, locale: string, prefix: string = ''): I18NContent {
+  static flatten(data: any, locale: string, filename: string, prefix: string = ''): I18NContent {
     const result: I18NMessage[] = [];
     for (const key in data) {
       const value = data[key];
       if (value.constructor.name.toLowerCase() === 'object') {
-        const flat = this.flatten(value, locale, prefix + key + '.');
+        const flat = this.flatten(value, locale, filename, prefix + key + '.');
         for (const message of flat.values) {
           result.push(message);
         }
@@ -18,7 +18,7 @@ export class JsonUtil {
         });
       }
     }
-    return { values: result };
+    return { filename: filename, values: result };
   }
 
   static deflatten(fileEditor: FileEditor, locale: string) {

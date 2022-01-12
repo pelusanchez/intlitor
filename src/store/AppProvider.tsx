@@ -15,7 +15,7 @@ export const reducer = (state: EditorState, newData: EditorState): EditorState =
     ...state,
     ...newData,
   };
-  LocalStorage.save(data.files);
+  LocalStorage.save(data.editor);
   return data;
 }
 

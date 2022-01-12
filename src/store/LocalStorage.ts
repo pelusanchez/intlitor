@@ -29,7 +29,7 @@ export class LocalStorage {
     return {
       project: '',
       languages: ['es', 'en'],
-      files: {},
+      files: [],
     };
   }
 }

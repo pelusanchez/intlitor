@@ -19,26 +19,29 @@ export const TopHeader = () => {
   React.useEffect(() => {
     const exists = LocalStorage.read();
     if (exists !== null) {
-      dispatch({ ...state, files: exists, selected: "" });
+      dispatch({ ...state, editor: exists, selected: "" });
     }
   }, []);
 
-  const setLocales = (data: FileEditor) => {
+  const setEditor = (data: FileEditor) => {
     LocalStorage.save(data);
-    dispatch({ ...state, files: data });
+    dispatch({ ...state, editor: data });
   }
 
-  const fileEditor: FileEditor = state.files;
+  const fileEditor: FileEditor = state.editor;
 
   const loadJson = (file: File) => {
-    if (fileEditor.files[file.name]) {
+    if (fileEditor.files.find(f => file.name === f.filename)) {
       return;
     }
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      const flat = JsonUtil.flatten(JSON.parse(e.target.result), state.translationInfo.source);
-      const nextFiles = { ...fileEditor.files, [file.name]: flat };
-      setLocales({ ...fileEditor, files: nextFiles });
+      const newFile = JsonUtil.flatten(
+        JSON.parse(e.target.result), 
+        state.translationInfo.source,
+        file.name);
+      const nextFiles = [ ...fileEditor.files, newFile ];
+      setEditor({ ...fileEditor, files: nextFiles });
       LocalStorage.save({ ...fileEditor, files: nextFiles });
     };
     reader.readAsText(file);

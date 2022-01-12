@@ -1,4 +1,4 @@
-import { EditorState, TranslationInfo } from "../models/models";
+import { EditorState, I18NContent, I18NMessage, TranslationInfo } from "../models/models";
 
 export const defaultTranslationInfo: TranslationInfo = {
   source: "es",
@@ -12,5 +12,9 @@ export const defaultTranslationInfo: TranslationInfo = {
 export const defaultState = {
   key: undefined,
   translationInfo: defaultTranslationInfo,
-  files: {},
+  editor: {
+    project: "",
+    languages: ['es', 'en'] as any,
+    files: [] as I18NContent[],
+  },
 } as EditorState;
