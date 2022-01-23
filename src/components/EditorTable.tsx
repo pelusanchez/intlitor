@@ -189,18 +189,21 @@ export const EditorTable = () => {
             <div className={`table-row ${i % 2 == 0 ? 'even' : 'odd'}`} key={entry.key}>
               <div className='value table-key'>
                 <VisualInput
+                  id={`input-0-${i}`}
                   onBlur={() => doUpdateKey()}
                   onChange={(v) => { updateKey(entry.key, v) }}
                   value={currentKeyUpdate.key === entry.key ? currentKeyUpdate.value : entry.key} />
               </div>
               <div className='value table-value'>
                 <VisualInput
+                  id={`input-1-${i}`}
                   onChange={(v) => { updateTranslateKey(entry.key, selectedLanguages.source, v) }}
                   value={entry[selectedLanguages.source] || ""} />
 
               </div>
               <div className='value table-value'>
                 <VisualInput
+                  id={`input-2-${i}`}
                   onChange={(v) => { updateTranslateKey(entry.key, selectedLanguages.target, v) }}
                   value={entry[selectedLanguages.target] || ""} />
               </div>
