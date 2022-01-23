@@ -32,7 +32,7 @@ export const EditorTable = () => {
   const selectedLanguages = state.translationInfo.selected;
   const project = state.editor;
 
-  const fileSelected = React.useMemo(() => project.files.find(f => f.filename === selected), [selected, project.files]);
+  const fileSelected = React.useMemo(() => project.files?.find(f => f.filename === selected), [selected, project.files]);
 
   const findByKey = (key: string): I18NMessage | undefined => {
     return fileSelected?.values.find(m => m.key === key);
@@ -165,7 +165,7 @@ export const EditorTable = () => {
           onChange={onChangeLocale("source")}
           value={
             locales.find(s =>
-              s.value == selectedLanguages.source)}
+              s.value === selectedLanguages.source)}
           options={projectLanguages} />
       </div>
       <div className='header header-value'>
@@ -173,7 +173,7 @@ export const EditorTable = () => {
           onChange={onChangeLocale("target")}
           value={
             locales.find(s =>
-              s.value == selectedLanguages.target)}
+              s.value === selectedLanguages.target)}
           options={projectLanguages} />
       </div>
 

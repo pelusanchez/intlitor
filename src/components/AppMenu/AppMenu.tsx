@@ -2,6 +2,7 @@ import React from "react";
 import { FileEditor } from "../../models/models";
 import { AppContext } from "../../store/AppProvider";
 import { LocalStorage } from "../../store/LocalStorage";
+import { undefinedSafe } from "../../utils/NullSage";
 
 import './AppMenu.scss';
 
@@ -27,7 +28,8 @@ export const AppMenu = () => {
   const generateFileName = () => {
     const key = 'unnamed';
     const extension = 'json';
-    const fileNames = editor.files.filter(f => f.filename.startsWith(key));
+    const fileNames = editor.files?.filter(
+      f => f.filename.startsWith(key)) || [];
     const next = fileNames.length + 1;
     return `${key}-${next}.${extension}`;
   };
@@ -38,7 +40,7 @@ export const AppMenu = () => {
       ...state, 
       editor: { 
         ...editor, files: [
-          ...editor.files, 
+          ...undefinedSafe(editor.files, []), 
           {
             filename: key,
             values: [],
@@ -141,7 +143,7 @@ export const AppMenu = () => {
         <span className='files-new' onClick={newFile}>+</span>
       </div>
       {
-        editor.files.filter(f => f !== undefined).map((file) => (
+        editor.files?.filter(f => f !== undefined).map((file) => (
           <div 
             className={`file ${selected === file.filename ? 'selected' : ''}`} 
             key={file.filename}>
